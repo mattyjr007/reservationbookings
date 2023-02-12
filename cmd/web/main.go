@@ -21,7 +21,7 @@ var session *scs.SessionManager
 
 func main() {
 
-	//change to true if i production mode
+	//change to true if in production mode
 	app.Inproduction = false
 
 	// Initialize a new session manager and configure the session lifetime.
