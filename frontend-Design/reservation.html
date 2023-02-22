@@ -68,26 +68,44 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <img src="static/images/marjors-suite.png" alt="room image" class = "img-fluid mx-auto d-block img-thumbnail room-image">
+      <h1 class="text-center mt-3">This will be the reservation page</h1>
+
+      <form action="reservation.html" method="get">
+
+        <div class="row">
+          <div class="col">
+            <div class="mb-3">
+              <label for="start-date" class="form-label">Starting Date</label>
+              <input type="date" class="form-control" id="start-date" aria-describedby="emailHelp">
+              <div id="sdateHelp" class="form-text">Enter your starting date in the form YYYY-MD-DD.</div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3">
+              <label for="end-date" class="form-label">Ending Date</label>
+              <input type="date" class="form-control" id="end-date" aria-describedby="emailHelp">
+              <div id="edateHelp" class="form-text">Enter your ending date in the form YYYY-MD-DD.</div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+
     </div>
-  </div>
-
-  <div class="row">
-    <h1 class="text-center mt-3">Major's Suites</h1>
-    <p>Your home away from home, set on the majestic waters of the Atlantic Ocean.
-      This will be a vacation to remember.
-      Welcome to our hotel booking website, where you can find the perfect accommodation for your upcoming trip. With our user-friendly interface and extensive search options,
-      you can easily browse through a wide range of hotels and select the one that best suits your needs.
-      Whether you're looking for a luxury hotel with all the amenities, a budget-friendly option for a quick stay, or something in between, we've got you covered. Our website features a diverse selection of hotels in various locations,
-      so you can find the perfect spot for your next adventure</p>
-  </div>
-
-  <div class="row">
-    <div class="col text-center">
-      <a href="/make-reservation-ms" class="btn btn-success">Check Availability</a>
-    </div>
 
   </div>
+
+
+
+
 
 
 </div>
