@@ -67,27 +67,47 @@
 
 <div class="container">
   <div class="row">
-   <div class="col">
-     <img src="static/images/generals-quarters.png" alt="room image" class = "img-fluid mx-auto d-block img-thumbnail room-image">
-   </div>
-  </div>
-  
-  <div class="row">
-    <h1 class="text-center mt-3">General Quarters</h1>
-    <p>Your home away from home, set on the majestic waters of the Atlantic Ocean.
-      This will be a vacation to remember.
-      Welcome to our hotel booking website, where you can find the perfect accommodation for your upcoming trip. With our user-friendly interface and extensive search options,
-      you can easily browse through a wide range of hotels and select the one that best suits your needs.
-      Whether you're looking for a luxury hotel with all the amenities, a budget-friendly option for a quick stay, or something in between, we've got you covered. Our website features a diverse selection of hotels in various locations,
-      so you can find the perfect spot for your next adventure</p>
-  </div>
+    <div class="col">
+      <h1 class="text-center mt-3">Make Reservation</h1>
 
-  <div class="row">
-    <div class="col text-center">
-      <a href="/make-reservation-gq" class="btn btn-success">Check Availability</a>
+      <form action="" class="needs-validation" novalidate method="post">
+
+        <div class="row">
+          <div class="col">
+            <div class="mb-3">
+              <label for="first-name" class="form-label">First name:</label>
+              <input required autocomplete="off" type="text" class="form-control" id="first-name" aria-describedby="emailHelp">
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="mb-3">
+              <label for="last-name" class="form-label">Last name:</label>
+              <input required autocomplete="off" type="text" class="form-control" id="last-name" aria-describedby="emailHelp">
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email:</label>
+          <input required autocomplete="off" type="text" class="form-control" id="email" aria-describedby="emailHelp">
+        </div>
+
+        <div class="mb-3">
+          <label for="mobile" class="form-label">Phone number:</label>
+          <input required autocomplete="off" type="text" class="form-control" id="mobile" aria-describedby="emailHelp">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Make Reservation</button>
+
+      </form>
+
     </div>
-
   </div>
+
+
+
+
 
 
 </div>

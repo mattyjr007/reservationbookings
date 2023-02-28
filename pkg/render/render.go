@@ -29,7 +29,7 @@ func NewTemplates(a *config.AppConfig) {
 	app = a
 }
 
-// RenderTemplateN similar to the previoud but renders go template
+// RenderTemplateN similar to the previous but renders go template
 func RenderTemplateN(w http.ResponseWriter, gohtml string, td *models.TemplateData) {
 
 	var templateCache map[string]*template.Template
