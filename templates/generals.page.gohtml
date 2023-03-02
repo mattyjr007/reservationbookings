@@ -1,0 +1,20 @@
+{{template "base" .}}
+
+{{define "content"}}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Welcome to my Goland Application</h1>
+                <p>This came from the template: {{index .StringMap "test"}}</p>
+
+                {{if ne (index .StringMap "remote_ip") ""}}
+                    <p>Your remote IP id {{index .StringMap "remote_ip"}}</p>
+                {{else}}
+                    <p>I don't know your IP address, Visit <a href="/">Home Page</a> so I can set it.</p>
+                {{end}}
+
+            </div>
+        </div>
+    </div>
+
+{{end}}

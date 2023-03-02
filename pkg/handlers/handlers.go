@@ -38,6 +38,7 @@ func (s *Repository) Home(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// About page handler function
 func (s *Repository) About(w http.ResponseWriter, r *http.Request) {
 	stringMap := make(map[string]string)
 	stringMap["test"] = "Hello Again..."
@@ -50,5 +51,33 @@ func (s *Repository) About(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplateN(w, "about.page.gohtml", &models.TemplateData{
 		StringMap: stringMap,
 	})
+
+}
+
+// generals route handler
+func (s *Repository) Generals(w http.ResponseWriter, r *http.Request) {
+
+	render.RenderTemplateN(w, "generals.page.gohtml", &models.TemplateData{})
+
+}
+
+// Majors route handler
+func (s *Repository) Majors(w http.ResponseWriter, r *http.Request) {
+
+	render.RenderTemplateN(w, "majors.page.gohtml", &models.TemplateData{})
+
+}
+
+// Reservation route handler
+func (s *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
+
+	render.RenderTemplateN(w, "search-availability.page.gohtml", &models.TemplateData{})
+
+}
+
+// MakeReservation route handler
+func (s *Repository) MakeReservation(w http.ResponseWriter, r *http.Request) {
+
+	render.RenderTemplateN(w, "make-reservation.page.gohtml", &models.TemplateData{})
 
 }
