@@ -2,5 +2,52 @@
 
 {{define "content"}}
 
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1 class="text-center mt-3">Make Reservation</h1>
+
+                <form action="" class="needs-validation" novalidate method="post">
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="first-name" class="form-label">First name:</label>
+                                <input required autocomplete="off" type="text" class="form-control" id="first-name" aria-describedby="emailHelp">
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="last-name" class="form-label">Last name:</label>
+                                <input required autocomplete="off" type="text" class="form-control" id="last-name" aria-describedby="emailHelp">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email:</label>
+                        <input required autocomplete="off" type="text" class="form-control" id="email" aria-describedby="emailHelp">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="mobile" class="form-label">Phone number:</label>
+                        <input required autocomplete="off" type="text" class="form-control" id="mobile" aria-describedby="emailHelp">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Make Reservation</button>
+
+                </form>
+
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>
+
 
 {{end}}

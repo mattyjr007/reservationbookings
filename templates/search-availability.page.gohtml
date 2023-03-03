@@ -2,5 +2,72 @@
 
 {{define "content"}}
 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-7">
+                <h1 class="text-center mt-3">Search Availability</h1>
+
+                <form action="reservation.html" method="get">
+
+
+
+
+                    <div class="row" id="date-booking">
+                        <div class="col-md-5">
+
+                            <label for="start-date" class="form-label">Starting Date</label>
+                            <input required type="text" name="start" id="start-date" class="form-control" placeholder="2019-02-06">
+                        </div>
+
+                        <div class="col-md-1">
+                            <br>
+                            <span>to</span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="end-date" class="form-label">Ending Date</label>
+                            <input required type="text" name="end" id="end-date" class="form-control" placeholder="2021-06-23">
+
+                        </div>
+                    </div>
+
+                    <!-- <div class="col">
+                       <div class="mb-3">
+                         <label for="start-date" class="form-label">Starting Date</label>
+                         <input required type="date" class="form-control" id="start-date" aria-describedby="emailHelp">
+                         <div id="sdateHelp" class="form-text">Enter your starting date in the form YYYY-MD-DD.</div>
+                       </div>
+                     </div>
+                     <div class="col">
+                       <div class="mb-3">
+                         <label for="end-date" class="form-label">Ending Date</label>
+                         <input required type="date" class="form-control" id="end-date" aria-describedby="emailHelp">
+                         <div id="edateHelp" class="form-text">Enter your ending date in the form YYYY-MD-DD.</div>
+                       </div>
+                     </div> -->
+                    <br>
+                    <button  type="submit" class="btn btn-primary">Search Availability</button>
+                    <button id="book" type="button" class="btn btn-primary">Book</button>
+                </form>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+{{end}}
+
+{{define "js"}}
+    <script>
+        const elem = document.getElementById('date-booking');
+      const rangepicker = new DateRangePicker(elem, {
+          // ...options
+          format: "yyyy-mm-dd",
+      });
+    </script>
 
 {{end}}

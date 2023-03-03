@@ -1,6 +1,70 @@
 {{template "base" .}}
 
 {{define "content"}}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <img src="/static/images/marjors-suite.png" alt="room image" class = "img-fluid mx-auto d-block img-thumbnail room-image">
+            </div>
+        </div>
 
+        <div class="row">
+            <h1 class="text-center mt-3">Major's Suites</h1>
+            <p>Your home away from home, set on the majestic waters of the Atlantic Ocean.
+                This will be a vacation to remember.
+                Welcome to our hotel booking website, where you can find the perfect accommodation for your upcoming trip. With our user-friendly interface and extensive search options,
+                you can easily browse through a wide range of hotels and select the one that best suits your needs.
+                Whether you're looking for a luxury hotel with all the amenities, a budget-friendly option for a quick stay, or something in between, we've got you covered. Our website features a diverse selection of hotels in various locations,
+                so you can find the perfect spot for your next adventure</p>
+        </div>
+
+        <div class="row">
+            <div class="col text-center">
+                <a id="check-availability" class="btn btn-success">Check Availability</a>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+{{end}}
+
+{{define "js"}}
+
+    <script>
+
+        // notification customizations
+        document.getElementById("check-availability").addEventListener("click", function (){
+            // notifyModal("Hello Wolrd", "Welcome to my Modal", "success", "good")
+
+            let html = `
+    <form id ="check-availability-form" action ="" method="post" novalidate class="needs-validation">
+
+    <div class="row" id="date-bookings">
+        <div class="col">
+            <input required disabled type="text" name="start" id="start-datem" class="form-control" placeholder="Arrival">
+        </div>
+
+         <div class="col">
+              <input required disabled type="text" name="end" id="end-datem" class="form-control" placeholder="Departure">
+         </div>
+
+    </div>
+
+     <br>
+
+
+    </form>
+    `
+            attention.custom({html: html})
+
+
+
+        })
+
+
+    </script>
 
 {{end}}

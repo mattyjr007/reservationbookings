@@ -84,24 +84,15 @@
     <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.1/dist/js/datepicker-full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    {{block "js" .}}
-
-    {{end}}
-
     <script>
         console.log("I am writing javascript")
-        const elem = document.getElementById('date-booking');
-        const rangepicker = new DateRangePicker(elem, {
-            // ...options
-            format: "yyyy-mm-dd",
-        });
 
 
         // call our javascript module Prompt
         let attention = Prompt();
 
         // notification customizations
-        document.getElementById("book").addEventListener("click", function (){
+       /* document.getElementById("book").addEventListener("click", function (){
             // notifyModal("Hello Wolrd", "Welcome to my Modal", "success", "good")
 
             let html = `
@@ -135,7 +126,7 @@
 
 
         })
-
+*/
 
         // notification module
         function Prompt() {
@@ -240,6 +231,11 @@
 
 
     </script>
+
+    {{block "js" .}}
+
+    {{end}}
+
 
     </body>
     </html>
