@@ -2,6 +2,7 @@ package render
 
 import (
 	"bytes"
+	"github.com/justinas/nosurf"
 	"github.com/mattyjr007/reservationbookings/pkg/config"
 	"github.com/mattyjr007/reservationbookings/pkg/models"
 	"html/template"
@@ -29,8 +30,13 @@ func NewTemplates(a *config.AppConfig) {
 	app = a
 }
 
+func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateData {
+	td.CSRFToken = nosurf.Token(r)
+	return td
+}
+
 // RenderTemplateN similar to the previous but renders go template
-func RenderTemplateN(w http.ResponseWriter, gohtml string, td *models.TemplateData) {
+func RenderTemplateN(w http.ResponseWriter, r *http.Request, gohtml string, td *models.TemplateData) {
 
 	var templateCache map[string]*template.Template
 	if app.UseCache {
@@ -44,6 +50,10 @@ func RenderTemplateN(w http.ResponseWriter, gohtml string, td *models.TemplateDa
 			//return
 		}*/
 	}
+
+	//set the CSRFtoken to allow for passing of request
+	td = AddDefaultData(td, r)
+	//td.CSRFToken = nosurf.Token(r)
 
 	// create a template cache for pages
 	/*templateCache, err := CreateTemplateCache()

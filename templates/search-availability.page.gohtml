@@ -8,10 +8,8 @@
             <div class="col-md-7">
                 <h1 class="text-center mt-3">Search Availability</h1>
 
-                <form action="reservation.html" method="get">
-
-
-
+                <form action="/search-availability" method="post">
+                    <input  type="hidden" name="csrf_token" value="{{.CSRFToken}}">
 
                     <div class="row" id="date-booking">
                         <div class="col-md-5">
@@ -48,7 +46,7 @@
                      </div> -->
                     <br>
                     <button  type="submit" class="btn btn-primary">Search Availability</button>
-                    <button id="book" type="button" class="btn btn-primary">Book</button>
+                 <!--   <button id="book" type="button" class="btn btn-primary">Book</button> -->
                 </form>
 
             </div>
