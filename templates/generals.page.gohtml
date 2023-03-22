@@ -58,10 +58,49 @@
 
     </form>
     `
-            attention.custom({html: html,
+            // attention.custom({html: html,
+            //     callback: function (result) {
+            //         console.log("called")
+            //         fetch('/search-availability-json')
+            //             .then(response => response.json())
+            //             .then(data => {
+            //                 console.log(data)
+            //             })
+            //     }
+            // })
+
+            attention.custom({
+                html: html,
+
+                willOpen: () =>{
+                    const elem2 = document.getElementById('date-bookings');
+                    const rangepickerk = new DateRangePicker(elem2, {
+                        // ...options
+                        format: "yyyy-mm-dd",
+                        showOnFocus:true,
+                    });
+                },
+
+                didOpen: () => {
+                    document.getElementById("start-datem").removeAttribute('disabled')
+                    document.getElementById("end-datem").removeAttribute('disabled')
+
+                },
+
                 callback: function (result) {
                     console.log("called")
-                    fetch('/search-availability-json')
+
+                    // get the data from the form
+                    let form = document.getElementById("check-availability-form");
+                    let formData = new FormData(form);
+                    // append the csrf_token so the post request can be sent
+                    formData.append("csrf_token","{{.CSRFToken}}");
+
+                    // use ajax to send a fetch to the post url and post the data
+                    fetch('/search-availability-json',
+                        {method: "post",
+                            body: formData,
+                        })
                         .then(response => response.json())
                         .then(data => {
                             console.log(data)

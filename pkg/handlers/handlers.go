@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/mattyjr007/reservationbookings/pkg/config"
+	"github.com/mattyjr007/reservationbookings/pkg/forms"
 	"github.com/mattyjr007/reservationbookings/pkg/models"
 	"github.com/mattyjr007/reservationbookings/pkg/render"
 	"log"
@@ -80,13 +81,91 @@ func (s *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
 
 // MakeReservation route handler
 func (s *Repository) MakeReservation(w http.ResponseWriter, r *http.Request) {
+	// create an empty reservation so we don't get errors
+	var emptyReservation models.Reservation
+	data := make(map[string]interface{})
+	data["reservation"] = emptyReservation
 
-	render.RenderTemplateN(w, r, "make-reservation.page.gohtml", &models.TemplateData{})
+	render.RenderTemplateN(w, r, "make-reservation.page.gohtml", &models.TemplateData{
+		Form: forms.New(nil), // passes the form data
+		Data: data,           // pass the empty reservation data
+	})
 
 }
 
 // PostReservation route handler
 func (s *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm() // this parses the form data r.Form
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
+	// save the body/ form data to an instance of the reservation type
+	reservation := models.Reservation{
+		FirstName: r.Form.Get("first-name"),
+		LastName:  r.Form.Get("last-name"),
+		Email:     r.Form.Get("email"),
+		Phone:     r.Form.Get("phone"),
+	}
+
+	form := forms.New(r.PostForm) //
+
+	// this adds the error of field and message also returns true if no error
+	//form.Has("first-name", r)
+	form.Required("first-name", "last-name", "email", "phone")
+	form.MinLength("first-name", 3, r)
+	form.IsEmail("email")
+
+	// check if there are no errors entirely ,and it is valid form
+	if !form.Valid() {
+		// if there are errors it stores the reserv data in our template data
+		// doing the above let the user know what we have entered
+		data := make(map[string]interface{})
+		data["reservation"] = reservation
+
+		// render the form with the error message and prefilled correct values
+		render.RenderTemplateN(w, r, "make-reservation.page.gohtml", &models.TemplateData{
+			Form: form, // passes the form data
+			Data: data, // pass the data
+		})
+		return
+
+	}
+	// after checking if the form is valid we will store the reservation detail in session and take them to reservation summary
+	// store the details in session
+	s.App.Session.Put(r.Context(), "reservation", reservation) // but tell the program in main what type of data to store
+	//redirect to summary page
+	http.Redirect(w, r, "/reservation-summary", http.StatusSeeOther) //303
+}
+
+// ReservationSummary route handler displays reservation details after making reservation
+func (s *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) {
+	data := make(map[string]interface{})
+	reservation, ok := s.App.Session.Get(r.Context(), "reservation").(models.Reservation)
+
+	if !ok {
+		// this holds if reservation data is not present
+		log.Println("Error please make a reservation first")
+		// now store an error message in session
+		s.App.Session.Put(r.Context(), "error", "Please make a reservation first !!")
+		// redirect them to homepage
+		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+
+		return // prevents the rest of the code running
+
+	} else {
+		data["reservation"] = reservation
+
+		render.RenderTemplateN(w, r, "reservation-summary.page.gohtml", &models.TemplateData{
+			Data: data,
+		})
+	}
+
+}
+
+// PostSearchAvailability route handler
+func (s *Repository) PostSearchAvailability(w http.ResponseWriter, r *http.Request) {
 
 	start := r.Form.Get("start")
 	end := r.Form.Get("end")
@@ -102,7 +181,7 @@ type jsonRespone struct {
 	Message string `json:"message"`
 }
 
-// AvailabilityJson is a get operation to return some JSON data
+// AvailabilityJson is a GET/POST operation to return some JSON data
 func (s *Repository) AvailabilityJson(w http.ResponseWriter, r *http.Request) {
 	// create a sample data response
 	resp := jsonRespone{

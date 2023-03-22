@@ -22,12 +22,18 @@ func routes(app *config.AppConfig) http.Handler {
 	mux.Get("/majors-suite", handlers.Repo.Majors)
 	mux.Get("/search-availability", handlers.Repo.Reservation)
 	mux.Get("/make-reservation", handlers.Repo.MakeReservation)
+	mux.Get("/reservation-summary", handlers.Repo.ReservationSummary)
 
 	//a sample json get request to return json output
-	mux.Get("/search-availability-json", handlers.Repo.AvailabilityJson)
+	//mux.Get("/search-availability-json", handlers.Repo.AvailabilityJson)
 	// Post Requests
-	mux.Post("/search-availability", handlers.Repo.PostReservation)
+	mux.Post("/search-availability", handlers.Repo.PostSearchAvailability)
+	// a post request that send in data from javascript
+	mux.Post("/search-availability-json", handlers.Repo.AvailabilityJson)
+	// make reservation post request to explore validation
+	mux.Post("/make-reservation", handlers.Repo.PostReservation)
 
+	// configure the path to read in static files
 	fileServer := http.FileServer(http.Dir("./static/"))
 	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))
 	return mux
