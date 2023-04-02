@@ -2,6 +2,7 @@ package render
 
 import (
 	"bytes"
+	"fmt"
 	"github.com/justinas/nosurf"
 	"github.com/mattyjr007/reservationbookings/pkg/config"
 	"github.com/mattyjr007/reservationbookings/pkg/models"
@@ -31,7 +32,7 @@ func NewTemplates(a *config.AppConfig) {
 }
 
 func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateData {
-	td.Error = app.Session.PopString(r.Context(), "error") // returns a string and deletes if from session
+	td.Error = app.Session.PopString(r.Context(), "error") // returns the string value and deletes it from session
 	td.Flash = app.Session.PopString(r.Context(), "flash")
 	td.Warning = app.Session.PopString(r.Context(), "warning")
 	td.CSRFToken = nosurf.Token(r)
@@ -83,6 +84,7 @@ func RenderTemplateN(w http.ResponseWriter, r *http.Request, gohtml string, td *
 
 // map of functions to do some processing and pass to the template
 var functions = template.FuncMap{}
+var filedirtemp = "templates"
 
 // CreateTemplateCache creates a map of templates
 func CreateTemplateCache() (map[string]*template.Template, error) {
@@ -91,7 +93,7 @@ func CreateTemplateCache() (map[string]*template.Template, error) {
 	myCache := map[string]*template.Template{}
 
 	//get all template with .page.gohtml
-	pages, err := filepath.Glob("templates/*.page.gohtml")
+	pages, err := filepath.Glob(fmt.Sprintf("%s/*.page.gohtml", filedirtemp))
 	if err != nil {
 		return myCache, err
 	}
@@ -106,14 +108,14 @@ func CreateTemplateCache() (map[string]*template.Template, error) {
 			return myCache, err
 		}
 		// check if the template matches any layout
-		matches, err := filepath.Glob("templates/*.layout.gohtml")
+		matches, err := filepath.Glob(fmt.Sprintf("%s/*.layout.gohtml", filedirtemp))
 		if err != nil {
 			return myCache, err
 		}
 
 		// check if any layout is found and pass the 'pages' into the 'layout'
 		if len(matches) > 0 {
-			ts, err = ts.ParseGlob("templates/*.layout.gohtml")
+			ts, err = ts.ParseGlob(fmt.Sprintf("%s/*.layout.gohtml", filedirtemp))
 			if err != nil {
 				return myCache, err
 			}

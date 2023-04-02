@@ -33,7 +33,7 @@ func (f *Form) Has(field string, r *http.Request) bool {
 	return true
 }
 
-// Required loops through a range of strings and get the values of the form and check before adding it's error
+// Required loops through a range of strings and get the values of the form and check before adding its error
 func (f *Form) Required(fields ...string) {
 
 	for _, field := range fields {

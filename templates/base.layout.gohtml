@@ -238,12 +238,14 @@
                 if (result) {
                     //Swal.fire(JSON.stringify(result))
                     if(result.dismiss !== Swal.DismissReason.cancel){
-                        if (result.value !== ""){
+                        if (!result.includes("")){
                             if (c.callback !== undefined){
                                 c.callback(result);
+                                //console.log(result[0])
                             }
                         } else {
                             c.callback(false);
+                            console.log("no date selected")
                         }
                     } else {
                         c.callback(false);

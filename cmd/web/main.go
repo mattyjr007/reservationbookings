@@ -22,6 +22,32 @@ var app config.AppConfig
 var session *scs.SessionManager
 
 func main() {
+
+	err := run()
+	if err != nil {
+		log.Fatal(err) // it'll stop the application if any error
+	}
+	/*http.HandleFunc("/", handlers.Repo.Home)
+	http.HandleFunc("/about", handlers.Repo.About)
+
+	fmt.Printf("Server started on port: %s\n", portNumber)
+	log.Fatal(http.ListenAndServe(portNumber, nil))*/
+	srv := &http.Server{
+		Addr:    portNumber,
+		Handler: routes(&app),
+	}
+
+	fmt.Printf("Server started on port: %s\n", portNumber)
+	err = srv.ListenAndServe()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+}
+
+func run() error {
+
 	// what I am putting in session
 	gob.Register(models.Reservation{})
 
@@ -44,6 +70,7 @@ func main() {
 		log.Println("Error getting template cache", err)
 		log.Fatal(err) //this exits the application
 		//return
+		return err
 	}
 	// store template cache to struct
 	app.TemplateCache = tc
@@ -56,21 +83,5 @@ func main() {
 	repo := handlers.NewRepo(&app)
 	handlers.NewHandlers(repo)
 
-	/*http.HandleFunc("/", handlers.Repo.Home)
-	http.HandleFunc("/about", handlers.Repo.About)
-
-	fmt.Printf("Server started on port: %s\n", portNumber)
-	log.Fatal(http.ListenAndServe(portNumber, nil))*/
-	srv := &http.Server{
-		Addr:    portNumber,
-		Handler: routes(&app),
-	}
-
-	fmt.Printf("Server started on port: %s\n", portNumber)
-	err = srv.ListenAndServe()
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
+	return nil
 }

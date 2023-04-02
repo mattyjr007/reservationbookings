@@ -142,6 +142,7 @@ func (s *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 // ReservationSummary route handler displays reservation details after making reservation
 func (s *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
+	// get reservation from the session
 	reservation, ok := s.App.Session.Get(r.Context(), "reservation").(models.Reservation)
 
 	if !ok {
@@ -155,6 +156,8 @@ func (s *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) 
 		return // prevents the rest of the code running
 
 	} else {
+		//remove the reservation data from session
+		s.App.Session.Remove(r.Context(), "reservation")
 		data["reservation"] = reservation
 
 		render.RenderTemplateN(w, r, "reservation-summary.page.gohtml", &models.TemplateData{
