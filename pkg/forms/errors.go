@@ -16,6 +16,6 @@ func (e errors) Get(field string) string {
 	if len(es) == 0 { // check if error array is empty
 		return ""
 	}
-	// return the first element of the array, most recent error
+	// return the first element of the array, first error
 	return es[0]
 }

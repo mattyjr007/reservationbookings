@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"github.com/mattyjr007/reservationbookings/pkg/config"
 	"github.com/mattyjr007/reservationbookings/pkg/forms"
+	"github.com/mattyjr007/reservationbookings/pkg/helpers"
 	"github.com/mattyjr007/reservationbookings/pkg/models"
 	"github.com/mattyjr007/reservationbookings/pkg/render"
-	"log"
 	"net/http"
 )
 
@@ -97,7 +97,8 @@ func (s *Repository) MakeReservation(w http.ResponseWriter, r *http.Request) {
 func (s *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm() // this parses the form data r.Form
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
+		helpers.ServerError(w, err)
 		return
 	}
 
@@ -147,7 +148,8 @@ func (s *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) 
 
 	if !ok {
 		// this holds if reservation data is not present
-		log.Println("Error please make a reservation first")
+		//log.Println("Error please make a reservation first")
+		s.App.ErrorLog.Println("Error please make a reservation first")
 		// now store an error message in session
 		s.App.Session.Put(r.Context(), "error", "Please make a reservation first !!")
 		// redirect them to homepage
@@ -174,7 +176,9 @@ func (s *Repository) PostSearchAvailability(w http.ResponseWriter, r *http.Reque
 	end := r.Form.Get("end")
 	_, err := w.Write([]byte(fmt.Sprintf("Welcome the start date is %s and end date is %s", start, end)))
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
+		helpers.ServerError(w, err)
+		return
 	}
 	//http.Redirect(w, r, "/", 302)
 }
@@ -195,7 +199,9 @@ func (s *Repository) AvailabilityJson(w http.ResponseWriter, r *http.Request) {
 	// convert the struct to json data
 	out, err := json.MarshalIndent(resp, "", "     ")
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
+		helpers.ServerError(w, err)
+		return
 	}
 	// set the header to let the application know what we are sending
 	w.Header().Set("Content-Type", "application/json")

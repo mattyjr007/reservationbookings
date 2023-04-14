@@ -6,10 +6,12 @@ import (
 	"github.com/alexedwards/scs/v2"
 	"github.com/mattyjr007/reservationbookings/pkg/config"
 	"github.com/mattyjr007/reservationbookings/pkg/handlers"
+	"github.com/mattyjr007/reservationbookings/pkg/helpers"
 	"github.com/mattyjr007/reservationbookings/pkg/models"
 	"github.com/mattyjr007/reservationbookings/pkg/render"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -20,6 +22,12 @@ var app config.AppConfig
 
 // define the session variable outside main func incaase we need it
 var session *scs.SessionManager
+
+// define the infoLog for logging infos
+var infoLog *log.Logger
+
+// define the infoLog for logging infos
+var errorLog *log.Logger
 
 func main() {
 
@@ -54,6 +62,14 @@ func run() error {
 	//change to true if in production mode
 	app.Inproduction = false
 
+	// add a logger to log in Error
+	infoLog = log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	app.InfoLog = infoLog
+
+	//add an error log
+	errorLog = log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+	app.ErrorLog = errorLog
+
 	// Initialize a new session manager and configure the session lifetime.
 	session = scs.New()
 	session.Lifetime = 24 * time.Hour
@@ -82,6 +98,8 @@ func run() error {
 	// create a repository
 	repo := handlers.NewRepo(&app)
 	handlers.NewHandlers(repo)
+	// pass the app pointer
+	helpers.NewHelpers(&app)
 
 	return nil
 }

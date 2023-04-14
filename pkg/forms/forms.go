@@ -25,7 +25,7 @@ func New(data url.Values) *Form {
 
 func (f *Form) Has(field string, r *http.Request) bool {
 	// checks if the field of the form exist
-	x := r.Form.Get(field)
+	x := r.PostForm.Get(field) // or we can use f.Get(filed) or f.Values.Get(field)
 	if x == "" {
 		//	f.Errors.Add(field, "This field cannot be blank")
 		return false

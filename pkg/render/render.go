@@ -2,6 +2,7 @@ package render
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"github.com/justinas/nosurf"
 	"github.com/mattyjr007/reservationbookings/pkg/config"
@@ -14,7 +15,7 @@ import (
 
 // Renders web files
 
-func RenderTemplate(w http.ResponseWriter, gohtml string) {
+/*func RenderTemplate(w http.ResponseWriter, gohtml string) {
 
 	parserdTemplate, _ := template.ParseFiles("templates/" + gohtml)
 	err := parserdTemplate.Execute(w, nil)
@@ -23,7 +24,7 @@ func RenderTemplate(w http.ResponseWriter, gohtml string) {
 		return
 	}
 
-}
+}*/
 
 var app *config.AppConfig
 
@@ -40,7 +41,7 @@ func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateDa
 }
 
 // RenderTemplateN similar to the previous but renders go template
-func RenderTemplateN(w http.ResponseWriter, r *http.Request, gohtml string, td *models.TemplateData) {
+func RenderTemplateN(w http.ResponseWriter, r *http.Request, gohtml string, td *models.TemplateData) error {
 
 	var templateCache map[string]*template.Template
 	if app.UseCache {
@@ -69,7 +70,8 @@ func RenderTemplateN(w http.ResponseWriter, r *http.Request, gohtml string, td *
 	// get specific gohtml template
 	t, ok := templateCache[gohtml] //ok for if it does not exist
 	if !ok {
-		log.Fatal("Specific path not found")
+		//log.Fatal("Specific path not found")
+		return errors.New("can't get template from cache")
 	}
 	// since the template won't be read from disk we use a buffer
 	buf := new(bytes.Buffer)
@@ -78,7 +80,10 @@ func RenderTemplateN(w http.ResponseWriter, r *http.Request, gohtml string, td *
 	_, err := buf.WriteTo(w)
 	if err != nil {
 		log.Println("Error in writing template to browser", err)
+		return err
 	}
+
+	return nil
 
 }
 
